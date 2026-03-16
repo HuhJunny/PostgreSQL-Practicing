@@ -1,0 +1,38 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+
+  habits Habit[]
+}
+
+model Habit {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  targetCount Int
+  createdAt   DateTime @default(now())
+
+  userId String
+  user   User @relation(fields: [userId], references: [id])
+
+  logs HabitLog[]
+}
+
+model HabitLog {
+  id         String   @id @default(cuid())
+  value      Int
+  recordedAt DateTime @default(now())
+
+  habitId String
+  habit   Habit @relation(fields: [habitId], references: [id])
+}
