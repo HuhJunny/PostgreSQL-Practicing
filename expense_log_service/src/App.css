@@ -1,0 +1,58 @@
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.description {
+  margin-bottom: 16px;
+  color: #555;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+input,
+button {
+  padding: 8px;
+  font-size: 14px;
+}
+
+.token-status,
+.file-name {
+  font-size: 13px;
+  color: #444;
+}
+
+.file-input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.expense-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.expense-list li {
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 14px;
+}

@@ -7,32 +7,21 @@ generator client {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
+  id       String @id @default(cuid())
+  email    String @unique
+  password String
+  name     String?
 
-  habits Habit[]
+  expenses Expense[]
 }
 
-model Habit {
-  id          String   @id @default(cuid())
-  name        String
-  description String?
-  targetCount Int
-  createdAt   DateTime @default(now())
+model Expense {
+  id        String   @id @default(cuid())
+  amount    Int
+  memo      String?
+  imageUrl  String?
+  createdAt DateTime @default(now())
 
   userId String
   user   User @relation(fields: [userId], references: [id])
-
-  logs HabitLog[]
-}
-
-model HabitLog {
-  id         String   @id @default(cuid())
-  value      Int
-  recordedAt DateTime @default(now())
-
-  habitId String
-  habit   Habit @relation(fields: [habitId], references: [id])
 }
