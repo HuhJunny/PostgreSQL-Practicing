@@ -1,6 +1,23 @@
-node_modules
-# Keep environment variables out of version control
+# Global
+node_modules/
 .env
+.env.*
+dist/
+build/
 
-/generated/prisma
-uploads/
+# Backend
+backend/node_modules/
+backend/.env
+backend/uploads/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Prisma
+generated/prisma/
+
+# OS / Editor
+.DS_Store
+.vscode/
+.idea/
