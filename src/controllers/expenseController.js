@@ -11,8 +11,15 @@ import {
 
 export async function createExpense(req, res, next) {
   try {
+    const imageUrl = req.file
+      ? `/uploads/${req.file.filename}`
+      : null;
+
     const expense = await createExpenseService(
-      req.validatedBody,
+      {
+        ...req.validatedBody,
+        imageUrl,
+      },
       req.user.userId
     );
 

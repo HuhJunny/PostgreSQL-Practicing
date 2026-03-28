@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const createExpenseSchema = z.object({
-  amount: z.number().positive(),
+  amount: z.coerce.number().positive(),
   memo: z.string().optional(),
   imageUrl: z.string().optional(),
 });

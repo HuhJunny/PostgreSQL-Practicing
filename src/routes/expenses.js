@@ -9,12 +9,14 @@ import {
 import { validate } from "../middlewares/validate.js";
 import { createExpenseSchema } from "../dtos/expense.dto.js";
 import { authMiddleware } from "../middlewares/auth.js";
+import { upload } from "../middlewares/upload.js";
 
 const router = express.Router();
 
 router.post(
   "/",
   authMiddleware,
+  upload.single("image"),
   validate(createExpenseSchema),
   createExpense
 );

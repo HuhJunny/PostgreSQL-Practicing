@@ -15,7 +15,6 @@ function App() {
 
   const [amount, setAmount] = useState('')
   const [memo, setMemo] = useState('')
-  const [imageUrl, setImageUrl] = useState('')
   const [selectedFile, setSelectedFile] = useState(null)
 
   const [expenses, setExpenses] = useState([])
@@ -53,32 +52,24 @@ function App() {
     }
 
     try {
+      const formData = new FormData()
+      formData.append('amount', amount)
+      formData.append('memo', memo)
 
-      console.log({
-        amount,
-        parsedAmount: parseInt(amount),
-        memo,
-        imageUrl,
+      if (selectedFile) {
+        formData.append('image', selectedFile)
+      }
+
+      await api.post('/expenses', formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
-
-      await api.post(
-        '/expenses',
-        {
-          amount: parseInt(amount),
-          memo,
-          imageUrl,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      )
 
       setAmount('')
       setMemo('')
-      setImageUrl('')
       setSelectedFile(null)
+
       await fetchExpenses()
     } catch (error) {
       console.error('지출 등록 실패:', error)
@@ -155,12 +146,6 @@ function App() {
             onChange={(event) => setMemo(event.target.value)}
             required
           />
-          <input
-            type="text"
-            placeholder="imageUrl (현재는 문자열 입력 방식)"
-            value={imageUrl}
-            onChange={(event) => setImageUrl(event.target.value)}
-          />
 
           <label className="file-input">
             이미지 파일 선택 (추후 presigned URL 업로드 용도)
@@ -169,6 +154,14 @@ function App() {
           <p className="file-name">
             선택 파일: {selectedFile ? selectedFile.name : '없음'}
           </p>
+
+          {selectedFile && (
+            <img
+              src={URL.createObjectURL(selectedFile)}
+              width={200}
+              alt="preview"
+            />
+          )}
 
           <button type="submit">지출 등록</button>
         </form>
@@ -186,6 +179,13 @@ function App() {
               <div>amount: {expense.amount}</div>
               <div>memo: {expense.memo}</div>
               <div>imageUrl: {expense.imageUrl || '-'}</div>
+
+              {expense.imageUrl && (
+                <img
+                  src={`http://localhost:3000${expense.imageUrl}`}
+                  width={200}
+                />
+              )}
             </li>
           ))}
         </ul>
